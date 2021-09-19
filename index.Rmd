@@ -16,23 +16,30 @@ Blurb about percentage of college age students in college
 
 Blurb about relation to high school graduation
 
-The Washington Office of Superintendent of Public Instruction (OSPI) regularly publishes data about enrollment, demographics, finances, and graduation on their publicly accessible [data portal](https://www.k12.wa.us/data-reporting/data-portal) and in the [Washington Open Data Portal](https://data.wa.gov/). The OSPI published a [Report Card Graduation 2019-20](https://data.wa.gov/Education/Report-Card-Graduation-2019-20/gges-4vcv), which contains the most recent data enrollment, graduation rates, and dropout rates for students in 9th grade or higher. [Define cohort]
+One of the biggest factors in the path toward pursuing higher education is the attainment of a high school diploma. 
 
+The Washington Office of Superintendent of Public Instruction (OSPI) regularly publishes data about enrollment, demographics, finances, and graduation on their publicly accessible [data portal](https://www.k12.wa.us/data-reporting/data-portal) and on the [Washington Open Data Portal](https://data.wa.gov/). Their report for the 2019-2020 school year ([Report Card Graduation 2019-20](https://data.wa.gov/Education/Report-Card-Graduation-2019-20/gges-4vcv)) contains recent data on enrollment, graduation rates, and dropout rates for students in the ninth grade or higher.
 
-We used this data to look at the graduation rates across six student groups: foster care, non-foster care, homeless, non-homeless, low-income, and non-low income. 
+We used this data to look at the graduation rates across six student groups: foster care, non-foster care, homeless, non-homeless, low-income, and non-low income.
 
 ```{r}
 expanded_grad_rate_plot
 ```
   \
-The graduation rates of foster care, homeless, and low-income students all fall below the overall graduation rate of `r round(all_students_grad_rate*100, 2)`%.
+The graduation rates of foster care, homeless, and low-income students, in contrast to those of students not in those groups, all fall below the overall graduation rate of `r round(all_students_grad_rate*100, 2)`%. 
+
+
+The data defines three possible outcomes for students: graduating, dropping out, and continuing. 
 
 
 ```{r student_group_outcomes_plot, fig.height=6, include=TRUE}
 student_group_outcomes_plot
 ```
 
-Although some students who did not graduate do continue to stay enrolled for the next school year, about a third of students in foster care and homeless students drop out. [How does this prevent pursuit of higher education]
+When we look into the outcomes for these six student groups, we find that while some students who do not graduate within the time frame in which the data was recorded do continue pursuing their secondary education, the majority of students who do not graduate drop out. 
+
+
+More specifically, 38.8% of students in foster care and 31.6% of homeless students in Washington drop out of high school. [How does this prevent pursuit of higher education]
 
 ```{r, fig.width=9, fig.height=5}
 dropout_plots
@@ -41,7 +48,7 @@ dropout_plots
 As seen in the first graph, across all six of these student groups, students who end up dropping out tend to do so in the same timeline. The plurality of students who drop out tend to do so between their third and fourth year of high school. 
 
   
-However, if we look at the proportion of students who drop out each year over the total number of students in that cohort, we see that the overall dropout rate sharply increases from Year 3 to 4 for homeless students and students in foster care. [drop out laws?]
+However, if we look at the proportion of students who drop out each year over the total number of students in that cohort, we see that the overall dropout rate increases much more sharply from Year 3 to 4 for homeless students and students in foster care. [drop out laws?]
 
   \
   \

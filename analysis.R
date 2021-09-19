@@ -67,7 +67,7 @@ expanded_grad_rate_plot <- expanded_grad_rate_df %>%
   geom_text(aes(label = scales::percent(grad_rate), x = StudentGroup, y = grad_rate),
             position = position_dodge(width = 0.9), vjust = -0.5, size = 3.5, color = 'gray30') +
   geom_line(mapping = aes(x = StudentGroup, y = all_students_grad_rate, 
-                          group = 1), color = "black", size = 1.1, linetype = 2) +
+                          group = 1), color = "black", size = 1, linetype = 2) +
   geom_text(aes(label = paste(sprintf("%.2f", all_students_grad_rate*100), "% (All Students)"), 
                 x = 1.95, y = all_students_grad_rate),
                 position = position_dodge(width = 0.5), vjust = -0.5, size = 4) +
