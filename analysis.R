@@ -41,7 +41,7 @@ grad_rate_plot <- grad_rate_df %>%
   geom_text(aes(label = paste(sprintf("%.2f", all_students_grad_rate*100), "% (All Students)"), 
                 x = 1.95, y = all_students_grad_rate),
                 position = position_dodge(width = 0.5), vjust = -0.5, size = 4) +
-  scale_x_discrete(guide = guide_axis(n.dodge=3)) +
+  ylim(0, 1) +
   labs(
     title = "Graduation Rates by Student Groups",
     x = "Student Group",
@@ -51,7 +51,7 @@ grad_rate_plot <- grad_rate_df %>%
     name = "Student Group",
     values = c("indianred3", "dodgerblue3", "lightcoral", "skyblue")
   ) +
-  theme_minimal() +
+  theme_light() +
   theme(plot.title = element_text(face = "bold"))
 
 ################################################################################
@@ -72,12 +72,11 @@ student_group_outcomes_plot <- student_group_outcomes_df %>%
   ggplot(aes(x = StudentGroup, y = Count, group = Outcome, fill = Outcome)) +
   geom_col(position = "fill") +
   geom_text(aes(label = paste0(sprintf("%.1f", pct*100), "%")), 
-            position = position_fill(vjust = 0.4), size = 3.5, color = 'white') +
+            position = position_fill(vjust = 0.5), size = 3.5, color = 'white') +
   geom_text(aes(label = paste0(sprintf("%.1f", pct*100), "%")), 
-            position = position_fill(vjust = 0.4), size = 3.57, color = 'white') +
+            position = position_fill(vjust = 0.5), size = 3.57, color = 'white') +
   geom_text(aes(label = paste0(sprintf("%.1f", pct*100), "%")), 
-            position = position_fill(vjust = 0.4), size = 3.6, color = 'white') +
-  scale_x_discrete(guide = guide_axis(n.dodge=3)) +
+            position = position_fill(vjust = 0.5), size = 3.6, color = 'white') +
   scale_y_continuous(labels = scales::percent) +
   scale_fill_manual(values = c("gold2", "indianred2", "turquoise3")) +
   labs(
@@ -89,7 +88,7 @@ student_group_outcomes_plot <- student_group_outcomes_df %>%
   theme(plot.title = element_text(face = "bold"))
 
 ################################################################################
-##### Dropout over Years ######
+##### Dropout rate over 7 years ######
 
 student_group_dropouts_df <- report_card_grad_df %>% 
   filter(SchoolName == "State Total", StudentGroupType %in% c("Homeless", "LowIncome")) %>% 
@@ -101,10 +100,10 @@ student_group_dropouts_df <- report_card_grad_df %>%
          "Year 4" = "Year4Dropout",
          "Year 5" = "Year5Dropout",
          "Year 6" = "Year6Dropout",
-         "Year 7" = "Year7Dropout") %>% 
-  group_by(StudentGroup)
+         "Year 7" = "Year7Dropout") 
 
 dropout_rate_over_cohort_total_df <- student_group_dropouts_df %>% 
+  group_by(StudentGroup) %>% 
   summarize(across(c(starts_with("Year")), sum)/sum(FinalCohort))
 
 cohort_dropout_rate_plot <- dropout_rate_over_cohort_total_df %>% 
@@ -116,13 +115,12 @@ cohort_dropout_rate_plot <- dropout_rate_over_cohort_total_df %>%
     name = "Student Group",
     values = c("indianred3", "dodgerblue3", "lightcoral", "skyblue")
   ) +
-  scale_x_discrete(guide = guide_axis(n.dodge=2)) +
   labs(
     title = "Dropout rates for student groups over seven years",
     x = "Dropout Year (after 9th grade)",
     y = "Proportion of dropouts to total students"
   ) +
-  theme_minimal() +
+  theme_light() +
   theme(plot.title = element_text(face = "bold"))
 
 
