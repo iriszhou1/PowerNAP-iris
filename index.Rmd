@@ -30,7 +30,7 @@ grad_rate_plot
 ```
   \
   \
-The graduation rates of homeless and low-income students, in contrast to the graduation rates of students not in those groups, both fall below the overall graduation rate of `r round(all_students_grad_rate*100, 2)`%. 
+The graduation rates of homeless and low-income students, in contrast to the graduation rates of students not in those groups, both fell below the overall graduation rate of `r round(all_students_grad_rate*100, 2)`%. 
 
 
 What happens to students who don't graduate? The data defines three possible outcomes for all enrolled students: graduating, dropping out, and continuing. 
@@ -42,7 +42,7 @@ student_group_outcomes_plot
 ```
   \
   \
-While some students who do not graduate do enroll in the next academic year, the majority of students who do not graduate drop out. More specifically, 31.6% of homeless students and 18.7% of low-income students in Washington who enroll in high school end up dropping out. 
+While some students who do not graduate do enroll in the next academic year, the majority of students who do not graduate drop out. More specifically, 31.6% of homeless students and 18.7% of low-income students in Washington who enrolled in high school ended up dropping out. 
 
 The OSPI also tracks the number of students in a cohort who dropout each year after the 9th grade. They define a cohort as all the students who enroll in the 9th grade in a given academic year, including students who transfer into this group in later years, and excluding students who transfer out.
   \
@@ -53,9 +53,9 @@ cohort_dropout_rate_plot
 ```
   \
   \
-Across all four of these student groups, students who end up dropping out tend to do so in the same timeline. The plurality of students who drop out tend to do so during their fourth year of high school. This is largely due to Washington state's mandatory attendance laws, which only allow children 16 or older to drop out if they are "regularly and lawfully employed", and if either parental consent is given, or the child is emancipated ([RCW 28A.225.010](https://app.leg.wa.gov/rcw/default.aspx?cite=28a.225.010)). 
+Across all four of these student groups, students who ended up dropping out tended to do so in the same timeline. The plurality of students who dropped out did so during their fourth year of high school. This is largely due to Washington state's mandatory attendance laws, which only allow children 16 or older to drop out if they are "regularly and lawfully employed", and if either parental consent is given, or the child is emancipated ([RCW 28A.225.010](https://app.leg.wa.gov/rcw/default.aspx?cite=28a.225.010)). 
 
-However, the dropout rate for homeless and low-income students is consistently higher each year than the dropout rate for students not in those groups. We can see a noticeably sharper increase in the dropout rate from Year 3 and 4 for homeless and low-income students as well. 
+However, the dropout rate for homeless and low-income students was consistently higher each year than the dropout rate for students not in those groups. We can see a noticeably sharper increase in the dropout rate from Year 3 and 4 for homeless and low-income students as well. 
 
 All in all, whether or not a student is experiencing homelessness or is from a low-income household appears to greatly impact on whether or not a student graduates. There are several possible reasons for the disparities in graduation rates. These students may have less access to the educational resources they need to succeed, and their circumstances outside of school may impede their ability to consistently complete schoolwork. In addition, the opportunity cost of continuing to enroll is the income that could earned once the student is old enough to drop out. Factors like these lead a greater percentage of homeless and low-income students to drop out, and may ultimately deter them from pursuing higher education. 
 
