@@ -39,7 +39,7 @@ grad_rate_plot <- grad_rate_df %>%
   geom_line(mapping = aes(x = StudentGroup, y = all_students_grad_rate, 
                           group = 1), color = "black", size = 1, linetype = 2) +
   geom_text(aes(label = paste(sprintf("%.2f", all_students_grad_rate*100), "% (All Students)"), 
-                x = 1.95, y = all_students_grad_rate),
+                x = 1.7, y = all_students_grad_rate),
                 position = position_dodge(width = 0.5), vjust = -0.5, size = 4) +
   ylim(0, 1) +
   labs(
