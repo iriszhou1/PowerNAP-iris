@@ -11,57 +11,27 @@ student_group_grad_rate_df <- report_card_grad_df %>%
   group_by(StudentGroup) %>% 
   summarize(grad_rate = sum(Graduate)/sum(FinalCohort))
 
-################################################################################
-##### Homeless/non-homeless and low-income/non-low income graduation rates #####
-homeless_lowincome_grad_rate_df <- student_group_grad_rate_df %>% 
-  filter(StudentGroup %in% c("Homeless", "Non-Homeless", "Low-Income", "Non-Low Income"))
-
-homeless_lowincome_grad_rate_table <- homeless_lowincome_grad_rate_df %>% 
-  rename("Student Group" = "StudentGroup",
-         "Graduation Rate" = "grad_rate") %>% 
-  kable()
-
 all_students_grad_rate <- student_group_grad_rate_df %>% 
   filter(StudentGroup == "All Students") %>% 
   select(grad_rate) %>% 
   pull() %>% 
   as.double()
 
-homeless_lowincome_grad_rate_plot <- homeless_lowincome_grad_rate_df %>% 
-  ggplot() + 
-  geom_col(mapping = aes(x = StudentGroup, y = grad_rate, fill = StudentGroup)) +
-  geom_text(aes(label = scales::percent(grad_rate), x = StudentGroup, y = grad_rate),
-            position = position_dodge(width = 0.9), vjust = -0.25, size = 3) +
-  geom_line(mapping = aes(x = StudentGroup, y = all_students_grad_rate, 
-                          group = 1), color = "black", size = 1.1, linetype = 2) +
-  geom_text(aes(label = paste(scales::percent(all_students_grad_rate), "(All Students)"), 
-                x = 1.55, y = all_students_grad_rate),
-            position = position_dodge(width = 0.5), vjust = -0.5, size = 4) +
-  labs(
-    title = "Graduation Rates by Student Groups",
-    x = "Student Group",
-    y = "Graduation Rate"
-    ) +
-  scale_fill_manual(
-    name = "Student Group",
-    values = c("indianred3", "dodgerblue3", "lightcoral", "skyblue")
-    ) +
-  theme_minimal() +
-  theme(plot.title = element_text(face = "bold"))
+################################################################################
+##### Homeless/non-homeless and low-income/non-low income graduation rates #####
 
-##### Expanded plot including 
-student_groups_vec <- c("Foster Care", "Homeless", "Low-Income",
-                        "Non-Foster Care", "Non-Homeless", "Non-Low Income")
+student_groups_vec <- c("Homeless", "Low-Income",
+                        "Non-Homeless", "Non-Low Income")
 
-expanded_grad_rate_df <- student_group_grad_rate_df %>% 
+grad_rate_df <- student_group_grad_rate_df %>% 
   filter(StudentGroup %in% student_groups_vec)
 
-expanded_grad_rate_table <- expanded_grad_rate_df %>% 
+grad_rate_table <- grad_rate_df %>% 
   rename("Student Group" = "StudentGroup",
          "Graduation Rate" = "grad_rate") %>% 
   kable()
 
-expanded_grad_rate_plot <- expanded_grad_rate_df %>% 
+grad_rate_plot <- grad_rate_df %>% 
   ggplot() + 
   geom_col(mapping = aes(x = StudentGroup, y = grad_rate, fill = StudentGroup)) +
   geom_text(aes(label = scales::percent(grad_rate), x = StudentGroup, y = grad_rate),
@@ -79,7 +49,7 @@ expanded_grad_rate_plot <- expanded_grad_rate_df %>%
   ) +
   scale_fill_manual(
     name = "Student Group",
-    values = c("seagreen", "indianred3", "dodgerblue3", "darkseagreen3", "lightcoral", "skyblue")
+    values = c("indianred3", "dodgerblue3", "lightcoral", "skyblue")
   ) +
   theme_minimal() +
   theme(plot.title = element_text(face = "bold"))
@@ -88,7 +58,7 @@ expanded_grad_rate_plot <- expanded_grad_rate_df %>%
 ##### Student Group Results #####
 
 student_group_outcomes_df <- report_card_grad_df %>% 
-  filter(SchoolName == "State Total", StudentGroupType %in% c("Homeless", "LowIncome", "Foster")) %>% 
+  filter(SchoolName == "State Total", StudentGroupType %in% c("Homeless", "LowIncome")) %>% 
   select(StudentGroup, FinalCohort, Graduate, Continuing, Dropout) %>% 
   group_by(StudentGroup) %>% 
   summarize(Graduate = sum(Graduate),
@@ -122,7 +92,7 @@ student_group_outcomes_plot <- student_group_outcomes_df %>%
 ##### Dropout over Years ######
 
 student_group_dropouts_df <- report_card_grad_df %>% 
-  filter(SchoolName == "State Total", StudentGroupType %in% c("Homeless", "LowIncome", "Foster")) %>% 
+  filter(SchoolName == "State Total", StudentGroupType %in% c("Homeless", "LowIncome")) %>% 
   select(StudentGroup, 18:24, Dropout, FinalCohort) %>% 
   replace(is.na(.), 0) %>% 
   rename("Year 1" = "Year1Dropout",
@@ -137,28 +107,6 @@ student_group_dropouts_df <- report_card_grad_df %>%
 dropout_rate_over_cohort_total_df <- student_group_dropouts_df %>% 
   summarize(across(c(starts_with("Year")), sum)/sum(FinalCohort))
 
-dropout_rate_over_dropout_total_df <- student_group_dropouts_df %>% 
-  summarize(across(c(starts_with("Year")), sum)/sum(Dropout))
-
-total_dropout_rate_plot <- dropout_rate_over_dropout_total_df %>% 
-  pivot_longer(cols = !StudentGroup, names_to = "Year", values_to = "DropoutRate") %>% 
-  ggplot(mapping = aes(x = Year, y = DropoutRate, color = StudentGroup, group = StudentGroup)) +
-  geom_point(size = 1.5, show.legend = FALSE) +
-  geom_line(size = .8, show.legend = FALSE) + 
-  scale_color_manual(
-    name = "Student Group",
-    values = c("seagreen", "indianred3", "dodgerblue3", "darkseagreen3", "lightcoral", "skyblue")
-  ) +
-  scale_x_discrete(guide = guide_axis(n.dodge=2)) +
-  labs(
-    title = "Dropout Rate over Seven Years for Student Groups",
-    x = "Dropout Year (after 9th grade)",
-    y = "Dropout Rate",
-    caption = "Proportion of dropouts per year to total dropouts in a cohort."
-  ) +
-  theme_minimal() +
-  theme(plot.title = element_text(face = "bold"))
-
 cohort_dropout_rate_plot <- dropout_rate_over_cohort_total_df %>% 
   pivot_longer(cols = !StudentGroup, names_to = "Year", values_to = "DropoutRate") %>% 
   ggplot(mapping = aes(x = Year, y = DropoutRate, color = StudentGroup, group = StudentGroup)) +
@@ -166,27 +114,15 @@ cohort_dropout_rate_plot <- dropout_rate_over_cohort_total_df %>%
   geom_line(size = .8) + 
   scale_color_manual(
     name = "Student Group",
-    values = c("seagreen", "indianred3", "dodgerblue3", "darkseagreen3", "lightcoral", "skyblue")
+    values = c("indianred3", "dodgerblue3", "lightcoral", "skyblue")
   ) +
   scale_x_discrete(guide = guide_axis(n.dodge=2)) +
   labs(
-    title = "",
+    title = "Dropout rates for student groups over seven years",
     x = "Dropout Year (after 9th grade)",
-    y = "",
-    caption = "Proportion of dropouts per year to total students in a cohort."
+    y = "Proportion of dropouts to total students"
   ) +
   theme_minimal() +
   theme(plot.title = element_text(face = "bold"))
-
-dropout_plots <- total_dropout_rate_plot + cohort_dropout_rate_plot
-
-dropout_rate_over_dropout_total_table <- dropout_rate_over_dropout_total_df %>% 
-  rename("Student Group" = "StudentGroup") %>% 
-  kable(caption = "Proportion of dropouts per year over total dropouts in cohort.") 
-
-
-
-
-
 
 
